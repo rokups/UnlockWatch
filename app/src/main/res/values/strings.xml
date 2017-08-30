@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Unlock Watch</string>
+    <string name="app_description_short">Shuts down device after failed login attempts.</string>
+</resources>
