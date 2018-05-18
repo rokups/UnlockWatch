@@ -16,10 +16,9 @@ import android.widget.Button;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 public class UnlockWatch extends AppCompatActivity {
-    public static String TAG = UnlockWatch.class.getSimpleName();
+    static String TAG = UnlockWatch.class.getSimpleName();
 
     public static class AdminReceiver extends DeviceAdminReceiver {
         private String mFailedLoginsSetting = "failedLogins";
@@ -43,9 +42,13 @@ public class UnlockWatch extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (Objects.equals(intent.getAction(), ACTION_PASSWORD_FAILED))
+            String action = intent.getAction();
+            if (action == null)
+                return;
+
+            if (action.equals(ACTION_PASSWORD_FAILED))
                 addFailedAttempt(context);
-            else if (Objects.equals(intent.getAction(), ACTION_PASSWORD_SUCCEEDED))
+            else if (intent.getAction().equals(ACTION_PASSWORD_SUCCEEDED))
                 setFailedAttempts(context, 0);
             super.onReceive(context, intent);
 
@@ -54,7 +57,7 @@ public class UnlockWatch extends AppCompatActivity {
                 try {
                     Runtime.getRuntime().exec("su -c reboot");
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "Reboot error", e);
                 }
             }
         }
@@ -68,14 +71,14 @@ public class UnlockWatch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Prepare to work with the DPM
         _DPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         _DeviceAdmin = new ComponentName(this, AdminReceiver.class);
 
-        final Button buttonAdmin = (Button) findViewById(R.id.buttonDevAdmin);
+        final Button buttonAdmin = findViewById(R.id.buttonDevAdmin);
         if (_DPM.isAdminActive(_DeviceAdmin)) {
             _DPM.setPasswordMinimumLength(_DeviceAdmin, _DPM.getPasswordMinimumLength(_DeviceAdmin));
             buttonAdmin.setEnabled(false);
@@ -90,7 +93,7 @@ public class UnlockWatch extends AppCompatActivity {
             }
         });
 
-        final Button buttonSu = (Button) findViewById(R.id.buttonSu);
+        final Button buttonSu = findViewById(R.id.buttonSu);
         buttonSu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 buttonSu.setEnabled(!isRootGiven());
@@ -103,7 +106,7 @@ public class UnlockWatch extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_ENABLE_ADMIN) {
             if (_DPM.isAdminActive(_DeviceAdmin)) {
-                final Button buttonAdmin = (Button) findViewById(R.id.buttonDevAdmin);
+                final Button buttonAdmin = findViewById(R.id.buttonDevAdmin);
                 buttonAdmin.setEnabled(false);
                 _DPM.setPasswordMinimumLength(_DeviceAdmin, _DPM.getPasswordMinimumLength(_DeviceAdmin));
             }
