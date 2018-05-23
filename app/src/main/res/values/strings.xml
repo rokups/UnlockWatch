@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Unlock Watch</string>
-    <string name="app_description_short">Shuts down device after failed login attempts.</string>
+    <string name="app_description_short">Performs selected action after number of failed unlock attempts.</string>
+    <string-array name="unlock_actions">
+        <item>None</item>
+        <item>Reboot</item>
+    </string-array>
+    <string-array name="failed_attempts">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>

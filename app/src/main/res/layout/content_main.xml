@@ -1,55 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="io.github.rokups.unlockwatch.AntiTheftShutdown"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp"
-    tools:showIn="@layout/activity_main">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              tools:context="io.github.rokups.unlockwatch.AntiTheftShutdown"
+              tools:showIn="@layout/activity_main" android:orientation="vertical"
+              android:layout_marginRight="8dp"
+              android:layout_marginLeft="8dp"
+              android:layout_marginStart="8dp"
+              android:layout_marginEnd="8dp">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="353dp"
-        android:layout_height="94dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="This application reboots your device after three failed unlock attempts. You want to combine this application with device encryption in order to render device your data inaccessible should you loose your device."
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent" android:id="@+id/description"
+            android:text="This application performs selected action after number failed unlock attempts."/>
 
-    <Button
-        android:id="@+id/buttonSu"
-        android:layout_width="353dp"
-        android:layout_height="48dp"
-        android:text="1. Grant permanent superuser access."
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="Unlock failures:"
+                android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="0dp"/>
+        <Spinner
+                android:layout_height="wrap_content" android:id="@+id/failure_count" android:layout_weight="1"
+                android:entries="@array/failed_attempts" android:layout_width="0dp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="Perform action:"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_width="0dp"/>
+        <Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" android:id="@+id/action" android:layout_weight="1"
+                android:entries="@array/unlock_actions"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonDevAdmin"
-        android:layout_width="353dp"
-        android:layout_height="48dp"
-        android:text="2. Grant device administrator access."
-        app:layout_constraintTop_toBottomOf="@+id/buttonSu"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
